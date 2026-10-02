@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Result Management</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:20px; }
+    h2 { text-align:center; color:#004080; }
+    form { max-width:400px; margin:auto; padding:20px; border:1px solid #ccc; }
+    input { width:100%; margin:8px 0; padding:8px; }
+    button { background:#004080; color:white; padding:10px; border:none; cursor:pointer; }
+    button:hover { background:#ff6600; }
+    #output { margin-top:20px; text-align:center; font-weight:bold; }
+  </style>
+</head>
+<body>
+  <h2>Student Result Management</h2>
+  <form id="resultForm">
+    <input type="number" id="sub1" placeholder="Marks in Python" required>
+    <input type="number" id="sub2" placeholder="Marks in Java" required>
+    <input type="number" id="sub3" placeholder="Marks in SQL" required>
+    <input type="number" id="sub4" placeholder="Marks in IOS" required>
+    <input type="number" id="sub5" placeholder="Marks in DSA" required>
+    <button type="button" onclick="calculateResult()">Calculate</button>
+  </form>
+
+  <div id="output"></div>
+
+  <script>
+    function calculateResult(){
+      let marks = [];
+      for(let i=1;i<=5;i++){
+        let val = parseInt(document.getElementById("sub"+i).value);
+        if(val<0 || val>100 || isNaN(val)){
+          alert("Marks must be between 0 and 100");
+          return;
+        }
+        marks.push(val);
+      }
+      let total = marks.reduce((a,b)=>a+b,0);
+      let percentage = total/5;
+      let grade = "";
+      if(percentage>=75) grade="Distinction";
+      else if(percentage>=60) grade="First Class";
+      else if(percentage>=50) grade="Second Class";
+      else if(percentage>=40) grade="Pass";
+      else grade="Fail";
+
+      let result = (percentage>=40) ? "Pass" : "Fail";
+
+      document.getElementById("output").innerHTML =
+        "Total: "+total+"<br>Percentage: "+percentage.toFixed(2)+"%<br>Grade: "+grade+"<br>Result: "+result;
+    }
+  </script>
+</body>
+</html>
